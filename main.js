@@ -29,13 +29,75 @@ Promise.all([
     // airport transformation
     airportData.forEach(d => {
         d.year = +d.Event_Year;
+        delete d.Event_Year;
     });
+    console.log(airportData);
     // make transformation
     makeData.forEach(d => {
-        
-    })
+        // group Injury_Severity to make counting easier
+
+        // keep Make, Injury_Severity columns ONLY
+        delete d.Accident_Number;
+        delete d.Event_Date;
+        delete d.Accident_Year;
+        delete d.Location;
+        delete d.Country;
+        delete d.Latitude;
+        delete d.Longitude;
+        delete d.Airport_Code;
+        delete d.Airport_Name;
+        delete d.Aircraft_Damage;
+        delete d.Registration_Number;
+        delete d.Model;
+        delete d.Schedule;
+        delete d.Air_Carrier;
+        delete d.Total_Fatal_Injuries;
+        delete d.Total_Serious_Injuries;
+        delete d.Total_Uninjured;
+        delete d.Weather_Condition;
+        delete d.Broad_Phase_of_Flight;
+    });
+    console.log(makeData);
+    // 2.b: ... AND TRANSFORM DATA
+
+    // 3.a: SET SCALES FOR CHART 1
+
+
+    // 4.a: PLOT DATA FOR CHART 1
+
+
+    // 5.a: ADD AXES FOR CHART 1
+
+
+    // 6.a: ADD LABELS FOR CHART 1
+
+
+    // 7.a: ADD INTERACTIVITY FOR CHART 1
+    
+
+    // ==========================================
+    //         CHART 2 (if applicable)
+    // ==========================================
+
+    // 3.b: SET SCALES FOR CHART 2
+
+
+    // 4.b: PLOT DATA FOR CHART 2
+
+
+    // 5.b: ADD AXES FOR CHART 
+
+
+    // 6.b: ADD LABELS FOR CHART 2
+
+
+    // 7.b: ADD INTERACTIVITY FOR CHART 2
+}).catch(err => {
+    console.log(err);
 });
-d3.csv("YOUR_CSV_NAME.csv").then(data => {
+
+// OLD
+// d3.csv("YOUR_CSV_NAME.csv").then(data => {
     // 2.b: ... AND TRANSFORM DATA
 
     // 3.a: SET SCALES FOR CHART 1
@@ -72,4 +134,4 @@ d3.csv("YOUR_CSV_NAME.csv").then(data => {
     // 7.b: ADD INTERACTIVITY FOR CHART 2
 
 
-});
+// });
