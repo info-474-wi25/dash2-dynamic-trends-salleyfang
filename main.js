@@ -27,42 +27,33 @@ Promise.all([
     d3.csv("CLEANED-grouped-make.csv")
     // d3.csv("CLEANED-make.csv")
 ]).then(([airportData, makeData]) => {
+    // 2.b: ... AND TRANSFORM DATA
     // airport transformation
     airportData.forEach(d => {
+        // convert year to numeric
         d.year = +d.Event_Year;
+        // delete og column
         delete d.Event_Year;
+        // extract ORD airport incidents only
+        d.incidents = +d["ORD"];
     });
     console.log(airportData);
     // make transformation
-    // makeData.forEach(d => {
-    //     // group Injury_Severity to make counting easier
-
-    //     // keep Make, Injury_Severity columns ONLY
-    //     delete d.Accident_Number;
-    //     delete d.Event_Date;
-    //     delete d.Accident_Year;
-    //     delete d.Location;
-    //     delete d.Country;
-    //     delete d.Latitude;
-    //     delete d.Longitude;
-    //     delete d.Airport_Code;
-    //     delete d.Airport_Name;
-    //     delete d.Aircraft_Damage;
-    //     delete d.Registration_Number;
-    //     delete d.Model;
-    //     delete d.Schedule;
-    //     delete d.Air_Carrier;
-    //     delete d.Total_Fatal_Injuries;
-    //     delete d.Total_Serious_Injuries;
-    //     delete d.Total_Uninjured;
-    //     delete d.Weather_Condition;
-    //     delete d.Broad_Phase_of_Flight;
-    // });
+    makeData.forEach(d => {
+        d.Fatal = +d.Fatal;
+        d["Non-Fatal"] = +d["Non-Fatal"];
+        d.Incident = +d.Incident;
+        d.Unavailable = +d.Unavailable;
+    })
+    makeData.sort((a, b) => d3.ascending(a.Incident, b.Incident));
     console.log(makeData);
-    // 2.b: ... AND TRANSFORM DATA
+
+    // ==========================================
+    //                  CHART 1 
+    // ==========================================
 
     // 3.a: SET SCALES FOR CHART 1
-
+    
 
     // 4.a: PLOT DATA FOR CHART 1
 
