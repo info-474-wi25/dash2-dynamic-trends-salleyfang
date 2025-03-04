@@ -29,13 +29,14 @@ Promise.all([
 ]).then(([airportData, makeData]) => {
     // 2.b: ... AND TRANSFORM DATA
     // airport transformation
+    const selectedAirport = "ATL"; // default airport
     airportData.forEach(d => {
         // convert year to numeric
         d.year = +d.Event_Year;
         // delete og column
         delete d.Event_Year;
         // extract ORD airport incidents only
-        d.incidents = +d["ORD"];
+        d.incidents = +d[selectedAirport];
     });
     console.log(airportData);
     // make transformation
@@ -69,6 +70,7 @@ Promise.all([
     // 4.a: PLOT DATA FOR CHART 1
     svg1_Line.append("path")
         .datum(airportData)
+        .attr("class", "line") // added class so we can select it later
         .attr("d", line)
         .attr("stroke", "black")
         .attr("fill", "none")
@@ -81,6 +83,7 @@ Promise.all([
             .tickFormat(d3.format("d")));
 
     svg1_Line.append("g")
+        .attr("class", "y-axis") // added class so we can select it later
         .call(d3.axisLeft(yScaleLine));
         // How do we make it so that the y-axis counts by ones?
         // TODO: figure out how to make the y-axis count by ones
@@ -101,7 +104,42 @@ Promise.all([
 
     
     // 7.a: ADD INTERACTIVITY FOR CHART 1
-    
+    function updateLineChart(selectedAirport) {
+        // update data row's incidents using selected airport
+        airportData.forEach(d => {
+            d.incidents = +d[selectedAirport];
+        });
+
+        // update yScale based on new max incidents (same as above)
+        const maxIncidents = d3.max(airportData, d => d.incidents);
+        yScaleLine.domain([0, maxIncidents]);
+        // update y-axis with integer tick formatting that counts by ones
+        // **used chat gpt to figure out how to do this**
+        svg1_Line.select(".y-axis")
+                .call(d3.axisLeft(yScaleLine)
+                .ticks(maxIncidents)
+                .tickFormat(d3.format("d")));
+
+        // update line path
+        svg1_Line.select(".line")
+                .datum(airportData)
+                .transition()
+                .attr("d", d3.line()
+                    .x(d => xScaleLine(d.year))
+                    .y(d => yScaleLine(d.incidents))
+                );
+        
+        // update title
+        d3.select(".chart-container h2")
+          .text(`Incidents at ${selectedAirport} Over Time`);
+    }
+
+    // add event listener MOVE TO BOTTOM WHEN DONE!!!
+    // **taken from demo8-nobel-interactive code**
+    d3.select("#airportSelect").on("change", function() {
+        const selectedAirport = d3.select(this).property("value");
+        updateLineChart(selectedAirport);
+    });
 
     // ==========================================
     //         CHART 2 (if applicable)
@@ -171,12 +209,20 @@ Promise.all([
     const legendData = ["Fatal", "Non-Fatal", "Incident", "Unavailable"];
 
     const legend = svg2_Bar.append("g")
-        .attr("transform", `translate(${width - 700}, -30)`);
+        // .attr("transform", `translate(${width - 700}, -30)`);
+        .attr("class", "legend")
+        // centers the legend and moves up 20px
+        .attr("transform", `translate(${width / 2}, -20)`);
     
+    const spacing = 100; // can adjust...distance between legend
+    const offset = ((legendData.length - 1) * spacing) / 2; // centers the legend
+
     legend.selectAll("g")
         .data(legendData)
         .enter().append("g")
-        .attr("transform", (d, i) => `translate(0,${i * 20})`)
+        // .attr("transform", (d, i) => `translate(0,${i * 20})`)
+        // each item in legend shifted so centered around origin of container
+        .attr("transform", (d, i) => `translate(${i * spacing - offset}, 0)`) // 
         .each(function(d) {
             const g = d3.select(this);
             g.append("rect")
@@ -188,8 +234,6 @@ Promise.all([
                 .attr("y", 9)
                 .text(d);
         });
-
-    
 
     // 7.b: ADD INTERACTIVITY FOR CHART 2
 }).catch(err => {

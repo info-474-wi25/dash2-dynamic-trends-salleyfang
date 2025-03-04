@@ -16,22 +16,47 @@
     </div>
     
     <!-- INTERACTIVE WIDGETS -->
-    <div class="item horizontal-container">
-        <div class="item"><!-- Your widget 1 code goes here. -->
-            <!-- Widget 1 title -->
-            <!-- Widget 1 element -->
-        </div>
-
-        <!-- DELETE THE FOLLOWING DIV IF YOU ONLY HAVE 1 WIDGET. -->
-        <div class="item"><!-- Your widget 2 code goes here. -->
-            <!-- Widget 2 title -->
-            <!-- Widget 2 element -->
+    <!-- dropdown widget for selecting airport -->
+    <div class="widgetBar">
+        <div class="widget">
+            <label for="airportSelect">Select Airport:</label>
+            <div class="select-container">
+                <select id="airportSelect">
+                    <option value="ATL">ATL</option>
+                    <option value="BOS">BOS</option>
+                    <option value="DEN">DEN</option>
+                    <option value="DFW">DFW</option>
+                    <option value="EWR">EWR</option>
+                    <option value="JFK">JFK</option>
+                    <option value="LAX">LAX</option>
+                    <option value="LGA">LGA</option>
+                    <option value="MIA">MIA</option>
+                    <option value="ORD">ORD</option>
+                    <option value="PANC">PANC</option>
+                    <option value="PHX">PHX</option>
+                    <option value="SEA">SEA</option>
+                    <option value="SFO">SFO</option>
+                </select>
+            </div>
         </div>
     </div>
+    <!-- <div class="item horizontal-container"> -->
+        <!-- <div class="item"> -->
+            <!-- Widget 1 title -->
+
+            <!-- Widget 1 element -->
+        <!-- </div> -->
+
+        <!-- DELETE THE FOLLOWING DIV IF YOU ONLY HAVE 1 WIDGET. -->
+        <!-- <div class="item"> -->
+            <!-- Widget 2 title -->
+            <!-- Widget 2 element -->
+        <!-- </div> -->
+    <!-- </div> -->
 
     <!-- CHART(S) -->
     <div class="item chart-container">
-        <h2>Number of Incidents per Airport Over Time (ORD)</h2>
+        <h2>Incidents at ATL Over Time</h2>
         <svg id="lineChart1" width="900" height="400"></svg> <!-- If you change this ID name, you must change it in main.js too -->
     </div>
     <!-- DELETE THE FOLLOWING DIV IF YOU ONLY HAVE 1 CHART. -->
