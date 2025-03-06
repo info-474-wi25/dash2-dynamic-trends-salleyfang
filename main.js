@@ -85,8 +85,15 @@ Promise.all([
     svg1_Line.append("g")
         .attr("class", "y-axis") // added class so we can select it later
         .call(d3.axisLeft(yScaleLine));
-        // How do we make it so that the y-axis counts by ones?
-        // TODO: figure out how to make the y-axis count by ones
+
+    const maxIncidents = d3.max(airportData, d => d.incidents);
+    yScaleLine.domain([0, maxIncidents]);
+    // update y-axis with integer tick formatting that counts by ones
+    // **used chat gpt to figure out how to do this**
+    svg1_Line.select(".y-axis")
+            .call(d3.axisLeft(yScaleLine)
+            .ticks(maxIncidents)
+            .tickFormat(d3.format("d")));
 
     // 6.a: ADD LABELS FOR CHART 1
     svg1_Line.append("text")
