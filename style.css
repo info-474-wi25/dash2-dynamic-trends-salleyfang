@@ -11,6 +11,25 @@ body {
     background-color: #f4f4f4;
 }
 
+/* Legend Squares */
+.square {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+}
+
+.legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Space between square and text */
+}
+
 /* Vertical Container Layout */
 .vertical-container {
     display: flex;

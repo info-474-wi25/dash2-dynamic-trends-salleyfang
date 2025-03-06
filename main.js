@@ -11,7 +11,7 @@ const svg1_Line = d3.select("#lineChart1") // If you change this ID, you must ch
     .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
-const svg2_Bar = d3.select("#lineChart2")
+const svg2_Bar = d3.select("#barChart2")
     .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -149,7 +149,7 @@ Promise.all([
     const x0Bar = d3.scaleBand() // X axis scaling
         .domain(makeData.map(d => d.Make))
         .rangeRound([0, width])
-        .paddingInner(0.05);
+        .paddingInner(0.2);
 
     const x1Bar = d3.scaleBand() // sub category
         .domain(["Fatal", "Non-Fatal", "Incident", "Unavailable"])
@@ -166,19 +166,46 @@ Promise.all([
         
 
     // 4.b: PLOT DATA FOR CHART 2
+    const tooltip = d3.select ("body")
+        .append ("div")
+        .attr("class", "tooltip-bar")
+        .style("position", "absolute")
+        .style("visibility", "hidden")
+        .style( "background", "rgba(0, 0, 0, 0.7)")
+        .style("color", "white")
+        .style("padding", "8px")
+        .style("border-radius", "5px")
+        .style("font-size", "12px");
+        
     svg2_Bar.append("g")
         .selectAll("g")
         .data(makeData)
         .enter().append("g")
         .attr("transform", d => `translate(${x0Bar(d.Make)},0)`)
         .selectAll("rect")
-        .data(d => ["Fatal", "Non-Fatal", "Incident", "Unavailable"].map(key => ({ key, value: d[key] })))
+        .data(d => ["Fatal", "Non-Fatal", "Incident", "Unavailable"].map(key => ({ key: key, value: d[key], make: d.Make })))
         .enter().append("rect")
         .attr("x", d => x1Bar(d.key))
         .attr("y", d => yScaleBar(d.value))
         .attr("width", x1Bar.bandwidth())
         .attr("height", d => height - yScaleBar(d.value))
-        .attr("fill", d => color(d.key));
+        .attr("fill", d => color(d.key))
+
+        .on("mouseover", function(event, d) {
+            tooltip.style("visibility", "visible")
+                .text(`${d.make} - ${d.key}: ${d.value}`)
+            // d3.select(this).style("stroke", "white").style("stroke-width", 2);
+        })
+        .on("mousemove", function(event) {
+            tooltip.style("top", (event.pageY - 10) + "px")
+                .style("left", (event.pageX + 10) + "px");
+        })
+        .on("mouseout", function() {
+            tooltip.style("visibility", "hidden");
+            d3.select(this).style("stroke", "none");
+        })
+
+        
 
 
     // 5.b: ADD AXES FOR CHART 
@@ -206,36 +233,39 @@ Promise.all([
         .attr("transform", "rotate(-90)");
 
     // LEGEND
-    const legendData = ["Fatal", "Non-Fatal", "Incident", "Unavailable"];
+    // const legendData = ["Fatal", "Non-Fatal", "Incident", "Unavailable"];
 
-    const legend = svg2_Bar.append("g")
-        // .attr("transform", `translate(${width - 700}, -30)`);
-        .attr("class", "legend")
-        // centers the legend and moves up 20px
-        .attr("transform", `translate(${width / 2}, -20)`);
+    // const legend = svg2_Bar.append("g")
+    //     // .attr("transform", `translate(${width - 700}, -30)`);
+    //     .attr("class", "legend")
+    //     // centers the legend and moves up 20px
+    //     .attr("transform", `translate(${width / 2}, -20)`);
     
-    const spacing = 100; // can adjust...distance between legend
-    const offset = ((legendData.length - 1) * spacing) / 2; // centers the legend
+    // const spacing = 100; // can adjust...distance between legend
+    // const offset = ((legendData.length - 1) * spacing) / 2; // centers the legend
 
-    legend.selectAll("g")
-        .data(legendData)
-        .enter().append("g")
-        // .attr("transform", (d, i) => `translate(0,${i * 20})`)
-        // each item in legend shifted so centered around origin of container
-        .attr("transform", (d, i) => `translate(${i * spacing - offset}, 0)`) // 
-        .each(function(d) {
-            const g = d3.select(this);
-            g.append("rect")
-                .attr("width", 18)
-                .attr("height", 18)
-                .attr("fill", color(d));
-            g.append("text")
-                .attr("x", 24)
-                .attr("y", 9)
-                .text(d);
-        });
+    // legend.selectAll("g")
+    //     .data(legendData)
+    //     .enter().append("g")
+    //     // .attr("transform", (d, i) => `translate(0,${i * 20})`)
+    //     // each item in legend shifted so centered around origin of container
+    //     .attr("transform", (d, i) => `translate(${i * spacing - offset}, 0)`) // 
+    //     .each(function(d) {
+    //         const g = d3.select(this);
+    //         g.append("rect")
+    //             .attr("width", 18)
+    //             .attr("height", 18)
+    //             .attr("fill", color(d));
+    //         g.append("text")
+    //             .attr("x", 24)
+    //             .attr("y", 9)
+    //             .text(d);
+    //     });
 
     // 7.b: ADD INTERACTIVITY FOR CHART 2
+
+
+    
 }).catch(err => {
     console.log(err);
 });

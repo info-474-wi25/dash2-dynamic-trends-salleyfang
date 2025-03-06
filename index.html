@@ -62,7 +62,22 @@
     <!-- DELETE THE FOLLOWING DIV IF YOU ONLY HAVE 1 CHART. -->
     <div class="item chart-container">
         <h2>Injury Severity Count by Make of Aircraft</h2>
-        <svg id="lineChart2" width="900" height="400"></svg>
+        <div class="legend">
+            <div class="legend-item">
+                <span class="square" style="background-color: #99abc5;"></span> Fatal
+            </div>
+            <div class="legend-item">
+                <span class="square" style="background-color: #8a89a6;"></span> Non-Fatal
+            </div>
+            <div class="legend-item">
+                <span class="square" style="background-color: #7b6888;"></span> Incident
+            </div>
+            <div class="legend-item">
+                <span class="square" style="background-color: #6b476b;"></span> Unavailable
+            </div>
+        </div>
+        
+        <svg id="barChart2" width="900" height="400"></svg>
     </div>
     <script src="main.js"></script>
 </body>
