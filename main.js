@@ -164,7 +164,8 @@ Promise.all([
         .padding(0.05);
 
     const yScaleBar = d3.scaleLinear() // Y axis scaling
-        .domain([0, d3.max(makeData, d => d3.max(["Fatal", "Non-Fatal", "Incident", "Unavailable"].map(key => d[key])))]).nice()
+        // .domain([0, d3.max(makeData, d => d3.max(["Fatal", "Non-Fatal", "Incident", "Unavailable"].map(key => d[key])))]).nice()
+        .domain([0, 700])
         .range([height, 0]);
 
     const color = d3.scaleOrdinal()
@@ -223,7 +224,10 @@ Promise.all([
         .style("text-anchor", "middle");
 
     svg2_Bar.append("g")
-        .call(d3.axisLeft(yScaleBar).ticks(null, "s"))
+        .call(d3.axisLeft(yScaleBar)
+        .ticks(7)
+        .tickFormat(d3.format("d"))
+    );
 
     // 6.b: ADD LABELS FOR CHART 2
     svg2_Bar.append("text")
