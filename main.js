@@ -18,8 +18,6 @@ const svg2_Bar = d3.select("#barChart2")
     .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
-// (If applicable) Tooltip element for interactivity
-// const tooltip = ...
 
 // 2.a: LOAD...
 Promise.all([
@@ -106,7 +104,7 @@ Promise.all([
         .attr("x", -height / 2)
         .attr("y", -50)
         .attr("text-anchor", "middle")
-        .text("Incidents")
+        .text("Incident Count") 
         .attr("transform", "rotate(-90)");
 
     
@@ -158,13 +156,12 @@ Promise.all([
         .rangeRound([0, width])
         .paddingInner(0.2);
 
-    const x1Bar = d3.scaleBand() // sub category
+    const x1Bar = d3.scaleBand() // Sub category
         .domain(["Fatal", "Non-Fatal", "Incident", "Unavailable"])
         .rangeRound([0, x0Bar.bandwidth()])
         .padding(0.05);
 
     const yScaleBar = d3.scaleLinear() // Y axis scaling
-        // .domain([0, d3.max(makeData, d => d3.max(["Fatal", "Non-Fatal", "Incident", "Unavailable"].map(key => d[key])))]).nice()
         .domain([0, 700])
         .range([height, 0]);
 
@@ -202,7 +199,6 @@ Promise.all([
         .on("mouseover", function(event, d) {
             tooltip.style("visibility", "visible")
                 .text(`${d.make} - ${d.key}: ${d.value}`)
-            // d3.select(this).style("stroke", "white").style("stroke-width", 2);
         })
         .on("mousemove", function(event) {
             tooltip.style("top", (event.pageY - 10) + "px")
@@ -212,8 +208,6 @@ Promise.all([
             tooltip.style("visibility", "hidden");
             d3.select(this).style("stroke", "none");
         })
-
-        
 
 
     // 5.b: ADD AXES FOR CHART 
@@ -228,6 +222,7 @@ Promise.all([
         .ticks(7)
         .tickFormat(d3.format("d"))
     );
+    
 
     // 6.b: ADD LABELS FOR CHART 2
     svg2_Bar.append("text")
@@ -240,83 +235,9 @@ Promise.all([
         .attr("x", -height / 2)
         .attr("y", -50)
         .attr("text-anchor", "middle")
-        .text("Number of Incidents")
+        .text("Incident Count")
         .attr("transform", "rotate(-90)");
 
-    // LEGEND
-    // const legendData = ["Fatal", "Non-Fatal", "Incident", "Unavailable"];
-
-    // const legend = svg2_Bar.append("g")
-    //     // .attr("transform", `translate(${width - 700}, -30)`);
-    //     .attr("class", "legend")
-    //     // centers the legend and moves up 20px
-    //     .attr("transform", `translate(${width / 2}, -20)`);
-    
-    // const spacing = 100; // can adjust...distance between legend
-    // const offset = ((legendData.length - 1) * spacing) / 2; // centers the legend
-
-    // legend.selectAll("g")
-    //     .data(legendData)
-    //     .enter().append("g")
-    //     // .attr("transform", (d, i) => `translate(0,${i * 20})`)
-    //     // each item in legend shifted so centered around origin of container
-    //     .attr("transform", (d, i) => `translate(${i * spacing - offset}, 0)`) // 
-    //     .each(function(d) {
-    //         const g = d3.select(this);
-    //         g.append("rect")
-    //             .attr("width", 18)
-    //             .attr("height", 18)
-    //             .attr("fill", color(d));
-    //         g.append("text")
-    //             .attr("x", 24)
-    //             .attr("y", 9)
-    //             .text(d);
-    //     });
-
-    // 7.b: ADD INTERACTIVITY FOR CHART 2
-
-
-    
 }).catch(err => {
     console.log(err);
 });
-
-// OLD
-// d3.csv("YOUR_CSV_NAME.csv").then(data => {
-    // 2.b: ... AND TRANSFORM DATA
-
-    // 3.a: SET SCALES FOR CHART 1
-
-
-    // 4.a: PLOT DATA FOR CHART 1
-
-
-    // 5.a: ADD AXES FOR CHART 1
-
-
-    // 6.a: ADD LABELS FOR CHART 1
-
-
-    // 7.a: ADD INTERACTIVITY FOR CHART 1
-    
-
-    // ==========================================
-    //         CHART 2 (if applicable)
-    // ==========================================
-
-    // 3.b: SET SCALES FOR CHART 2
-
-
-    // 4.b: PLOT DATA FOR CHART 2
-
-
-    // 5.b: ADD AXES FOR CHART 
-
-
-    // 6.b: ADD LABELS FOR CHART 2
-
-
-    // 7.b: ADD INTERACTIVITY FOR CHART 2
-
-
-// });
