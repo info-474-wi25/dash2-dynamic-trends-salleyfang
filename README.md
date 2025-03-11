@@ -2,7 +2,10 @@
 
 ![Screenshot of our Dynamic Trends Dashboard](image.png)
 
-## Dashboard 
+## Dashboard Site
+[Link to Dashboard](https://info-474-wi25.github.io/dash2-dynamic-trends-salleyfang/)
+
+## About
 [Dashboard 2: Dynamic Trends](https://docs.google.com/document/d/1sq1yJZUmW1MvwxXuSr9IpYa1Jc0f6EmoC0IWfP8PRnI/edit?usp=sharing)
 
 ## Documentation
