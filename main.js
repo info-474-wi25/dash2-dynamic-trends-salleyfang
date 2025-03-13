@@ -41,10 +41,10 @@ Promise.all([
     makeData.forEach(d => {
         d.Fatal = +d.Fatal;
         d["Non-Fatal"] = +d["Non-Fatal"];
-        d.Incident = +d.Incident;
+        d["Aircraft Damage"] = +d.Incident;
         d.Unavailable = +d.Unavailable;
     })
-    makeData.sort((a, b) => d3.ascending(a.Incident, b.Incident));
+    makeData.sort((a, b) => d3.ascending(a["Aircraft Damage"], b["Aircraft Damage"]));
     console.log(makeData);
 
     // ==========================================
@@ -157,7 +157,7 @@ Promise.all([
         .paddingInner(0.2);
 
     const x1Bar = d3.scaleBand() // Sub category
-        .domain(["Fatal", "Non-Fatal", "Incident", "Unavailable"])
+        .domain(["Fatal", "Non-Fatal", "Aircraft Damage", "Unavailable"])
         .rangeRound([0, x0Bar.bandwidth()])
         .padding(0.05);
 
@@ -166,7 +166,7 @@ Promise.all([
         .range([height, 0]);
 
     const color = d3.scaleOrdinal()
-        .domain(["Fatal", "Non-Fatal", "Incident", "Unavailable"])
+        .domain(["Fatal", "Non-Fatal", "Aircraft Damage", "Unavailable"])
         .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b"]);
         
 
@@ -188,7 +188,7 @@ Promise.all([
         .enter().append("g")
         .attr("transform", d => `translate(${x0Bar(d.Make)},0)`)
         .selectAll("rect")
-        .data(d => ["Fatal", "Non-Fatal", "Incident", "Unavailable"].map(key => ({ key: key, value: d[key], make: d.Make })))
+        .data(d => ["Fatal", "Non-Fatal", "Aircraft Damage", "Unavailable"].map(key => ({ key: key, value: d[key], make: d.Make })))
         .enter().append("rect")
         .attr("x", d => x1Bar(d.key))
         .attr("y", d => yScaleBar(d.value))
