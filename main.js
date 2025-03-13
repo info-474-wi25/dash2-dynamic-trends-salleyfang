@@ -72,7 +72,7 @@ Promise.all([
         .attr("d", line)
         .attr("stroke", "black")
         .attr("fill", "none")
-        .attr("stroke-width", 2);
+        .attr("stroke-width", 1.5);
 
     // 5.a: ADD AXES FOR CHART 1
     svg1_Line.append("g")

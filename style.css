@@ -124,7 +124,7 @@ a:hover {
     display: flex;
     flex-direction: row;
     justify-content: flex-start; /* Align widgets to the left */
-    width: 800px; /* Match the width of the chart for consistency */
+    width: 960px; /* Match the width of the chart for consistency */
     margin: 20px 0; /* Add vertical spacing */
     gap: 16px; /* Space between widgets */
     padding: 10px;
