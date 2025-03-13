@@ -130,7 +130,6 @@ a:hover {
     padding: 20px;
     margin: 20px 0; /* Add vertical spacing */
     gap: 16px; /* Space between widgets */
-    padding: 10px;
     background-color: #fff; /* White background for widgets container */
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
